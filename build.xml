@@ -17,7 +17,7 @@
 	
 	<!-- Programm ausführen  -->
 	<target name="run" depends="compile" description="Programm starten."> 
-		<java classpath="build" classname="de.hsos.ant.HelloWorld" fork="true"/>
+		<java classpath="build" classname="de.boozero.testseite2.Main" fork="true"/>
 	</target>
 	
 	<!-- Generierte Dateien entfernen -->
