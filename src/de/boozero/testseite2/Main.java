@@ -18,6 +18,7 @@ public class Main implements ServletRequestListener, ServletContextListener, Ser
      */
     public Main() {
         // TODO Auto-generated constructor stub
+		System.out.println("### Main");
     }
 
 	/**

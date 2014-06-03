@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="testseite2" basedir=".">
+	<description>
+		Beispiel fuer das Testszenario mit Ant
+	</description>
+	
+	<!-- Erstellen der Ordner-Struktur -->
+	<target name="prepare" description="Vorbereitungen ausführen">
+		<mkdir dir="build" />
+		<mkdir dir="src" />
+	</target>
+	
+	<!-- Sourcen kompilieren mit Hilfe des Java Compilers -->
+	<target name="compile" depends="prepare" description="Kompiliert die Java-Sourcen"> 
+		<javac srcdir="src" destdir="build" /> 
+	</target>
+	
+	<!-- Programm ausführen  -->
+	<target name="run" depends="compile" description="Programm starten."> 
+		<java classpath="build" classname="de.hsos.ant.HelloWorld" fork="true"/>
+	</target>
+	
+	<!-- Generierte Dateien entfernen -->
+	<target name="clean" description="Entfernt alle generierten Dateien und Verzeichnisse">
+		<delete dir="build" />
+		<delete dir="src" />
+	</target>
+	
+</project>
