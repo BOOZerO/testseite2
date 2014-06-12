@@ -49,7 +49,7 @@ public class Welcome extends HttpServlet {
 		writer.println("<html>");
 		writer.println("<head><title>Hello World Servlet Testseite2</title></head>");
 		writer.println("<body>");
-		writer.println("	<h1>Hello World from a Sevlet -- testseite2!</h1>");
+		writer.println("	<h1>Hello World from a Sevlet -- testseite2! </h1>");
 		writer.println("<body>");
 		writer.println("</html>");
 			
