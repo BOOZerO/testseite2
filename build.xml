@@ -37,11 +37,13 @@
 	
 	<!-- Hier die Einstellungen für das Target build -->
 	<target name="build" description="Compile source tree java files">
+	    <echo>build!</echo>
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.5" target="1.5">
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
+        <echo>build finished!</echo>
     </target>
 	
 	<!-- Sourcen kompilieren mit Hilfe des Java Compilers -->
