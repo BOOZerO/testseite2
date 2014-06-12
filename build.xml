@@ -9,7 +9,7 @@
 	<property name="src.dir" value="src"/>
     <property name="web.dir" value="WebContent"/>
     <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
-    <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+    <property name="lib.dir" value="${web.dir}/WEB-INF/lib"/>
     <property name="name" value="testseite2"/>
 	<property name="build.sysclasspath" value="first"/>
     
@@ -92,7 +92,8 @@
 	
 	<!-- Die Jar mit den Class-Dateien builden -->
 	<target name="build-jar">
-		<jar destfile="${web.dir}/WEB-INF/lib/testseite2_lib.jar"
+	    <mkdir dir="${lib.dir}" />
+		<jar destfile="${lib.dir}/testseite2_lib.jar"
 		     basedir="${build.dir}"
 		     includes="de/boozero/testseite2/**"
 		     excludes="**/Test.class">
