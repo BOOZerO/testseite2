@@ -92,27 +92,31 @@
 	
 	<!-- Die Jar mit den Class-Dateien builden -->
 	<target name="build-jar">
+	    <echo>build-jar!</echo>
 	    <mkdir dir="${lib.dir}" />
 		<jar destfile="${lib.dir}/testseite2_lib.jar"
 		     basedir="${build.dir}"
 		     includes="de/boozero/testseite2/**"
 		     excludes="**/Test.class">
 		</jar>
+	    <echo>build-jar finished!</echo>
 	</target>
 	
 	<!-- Die War Datei builden -->
 	<target name="build-war" description="wird auch package genannt">
+	   <echo>build-war!</echo>
 	   <war destfile="testseite2.war" webxml="${web.dir}/WEB-INF/web.xml">
-	   <fileset dir="${web.dir}">
-	      <include name="**/*.*"/>
-	      <exclude name="**/*.class"/>
-	   </fileset>
-	   <lib dir="${web.dir}/WEB-INF/lib">
-	      <exclude name="servlet-api.jar"/>
-	   </lib>
-	   <!-- 
-	   <classes dir="${build.dir}/web"/> -->
-	</war>
+		   <fileset dir="${web.dir}">
+		      <include name="**/*.*"/>
+		      <exclude name="**/*.class"/>
+		   </fileset>
+		   <lib dir="${web.dir}/WEB-INF/lib">
+		      <exclude name="servlet-api.jar"/>
+		   </lib>
+		   <!-- 
+		   <classes dir="${build.dir}/web"/> -->
+		</war>
+	    <echo>build-war finished!</echo>
 	</target>
 	
 	<!-- Hier das Target für Jenkins Build und Deploy -->
