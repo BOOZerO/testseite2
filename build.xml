@@ -115,7 +115,7 @@
 	</target>
 	
 	<!-- Hier das Target für Jenkins Build und Deploy -->
-	<target name="jenkins-build" depends="clean,build,build-jar,build-war" description="Die Jenkins Build mit Erstellung der War">
+	<target name="jenkins-build" depends="build,build-jar,build-war" description="Die Jenkins Build mit Erstellung der War">
 		<echo>War für ${sitename} builden und in eine War packen, danach aufräumen.  
 		    Verwendete Ant-Version: ${ant.version}. War wurde erstellt!
 		</echo>
