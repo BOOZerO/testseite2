@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="testseite2" basedir=".">
+<project name="testseite2" default="info" basedir=".">
 	<description>
 		Beispiel fuer das Testszenario mit Ant
 	</description>
+	
+	<!-- Hier die Properties -->
+	<property name="sitename" value="testseite2.boozero.de"/>
+	<property name="src.dir" value="src"/>
+    <property name="web.dir" value="WebContent"/>
+    <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+    <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+    <property name="name" value="testseite2"/>
+	<property name="build.sysclasspath" value="first"/>
+    
+	
+    <!-- Hier die Path Einstellungen -->
+    <path id="master-classpath">
+        <fileset dir="${web.dir}/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+    
+    
+	<!-- Info über das Projekt -->
+	<target name="info" description="Die Info anzeigen">
+		<echo>Dies ist die Testseite2 - ${sitename}, ein Beispiel für das Testszenario mit Ant und Jenkins zum builden einer War. 
+		    Verwendete Ant-Version: ${ant.version}, die folgenden Targets kannst du nutzen: </echo>
+	</target>
 	
 	<!-- Erstellen der Ordner-Struktur -->
 	<target name="prepare" description="Vorbereitungen ausführen">
 		<mkdir dir="build" />
 		<mkdir dir="src" />
 	</target>
+	
+	<!-- Hier die Einstellungen für das Target build -->
+	<target name="build" description="Compile source tree java files">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" source="1.5" target="1.5">
+            <src path="${src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+    </target>
 	
 	<!-- Sourcen kompilieren mit Hilfe des Java Compilers -->
 	<target name="compile" depends="prepare" description="Kompiliert die Java-Sourcen"> 
@@ -22,8 +56,69 @@
 	
 	<!-- Generierte Dateien entfernen -->
 	<target name="clean" description="Entfernt alle generierten Dateien und Verzeichnisse">
+		<!-- 
 		<delete dir="build" />
 		<delete dir="src" />
+		-->
+        <delete>
+            <fileset dir="${build.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </delete>
+	</target>
+	
+	<!-- deployen beinhaltet clean, prepare, compile und package -->
+	<target name="deploy" depends="clean,prepare,compile" description="Alles neu zusammen packen">
+		<echo>now deploy!</echo>
+		
+	</target>
+	
+	<!-- Java-Docomentation erzeugen -->
+	<target name="generate-javadoc">
+	    <javadoc packagenames="de.boozero.testseite2.*" sourcepath="${src.dir}" 
+	        destdir="doc" version="true" windowtitle="Testseite2">
+	      <doctitle><![CDATA[= Testseite2 =]]></doctitle>
+	      <bottom>
+	         <![CDATA[Copyright © 2011. All Rights Reserved.]]>
+	      </bottom>
+	      <group title="servlet classes" packages="de.boozero.testseite2.*"/>
+	      <!-- 
+	      <group title="util packages" packages="faxapp.util.*"/>
+	      <group title="web packages" packages="faxapp.web.*"/>
+	      <group title="data packages" packages="faxapp.entity.*:faxapp.dao.*"/> -->
+	    </javadoc>
+	    <echo message="Java Doc wurde generiert!" />
+	</target>
+	
+	<!-- Die Jar mit den Class-Dateien builden -->
+	<target name="build-jar">
+		<jar destfile="${web.dir}/WEB-INF/lib/testseite2_lib.jar"
+		     basedir="${build.dir}"
+		     includes="de/boozero/testseite2/**"
+		     excludes="**/Test.class">
+		</jar>
+	</target>
+	
+	<!-- Die War Datei builden -->
+	<target name="build-war" description="wird auch package genannt">
+	   <war destfile="testseite2.war" webxml="${web.dir}/WEB-INF/web.xml">
+	   <fileset dir="${web.dir}">
+	      <include name="**/*.*"/>
+	      <exclude name="**/*.class"/>
+	   </fileset>
+	   <lib dir="${web.dir}/WEB-INF/lib">
+	      <exclude name="servlet-api.jar"/>
+	   </lib>
+	   <!-- 
+	   <classes dir="${build.dir}/web"/> -->
+	</war>
+	</target>
+	
+	<!-- Hier das Target für Jenkins Build und Deploy -->
+	<target name="jenkins-build" depends="clean,build,build-jar,build-war" description="Die Jenkins Build mit Erstellung der War">
+		<echo>War für ${sitename} builden und in eine War packen, danach aufräumen.  
+		    Verwendete Ant-Version: ${ant.version}. War wurde erstellt!
+		</echo>
 	</target>
 	
 </project>
