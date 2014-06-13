@@ -95,8 +95,8 @@
 	<!-- Die Jar mit den Class-Dateien builden -->
 	<target name="build-jar">
 	    <echo>build-jar!</echo>
-	    <mkdir dir="${lib.dir}" />
-		<jar destfile="${lib.dir}/testseite2_lib.jar"
+	    <mkdir dir="${web.dir}/WEB-INF/lib" />
+		<jar destfile="${web.dir}/WEB-INF/lib/testseite2_lib.jar"
 		     basedir="${build.dir}"
 		     includes="de/boozero/testseite2/**"
 		     excludes="**/Test.class">
